@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.stockweb.stock.model.vo.Stock;
 import com.kh.stockweb.stock.service.StockService;
 
 import lombok.AllArgsConstructor;
@@ -23,7 +24,9 @@ public class StockController {
 	@PostMapping("/search")	   // Post 방식의 /search 주소의 요청이 왔을 때 처리할 메소드 지정
 	// [접근제한자] [예약어] 반환형 메소드명(매개변수) {}
 	public String searchStock(@RequestParam(value="name") String name) {
-		// = service.searchStock(name);
+		// @RequestParam 정의한 변수 => 요청 시 전달되는 데이터 (키값: name)
+
+		Stock stock = service.searchStock(name);
 		/*
 		 * {"name": "xxxx", "code":"xxxx", "price": "xxxx", "market_cap":"xxx"}
 		 * -> 이 데이터를 저장할 모델 정의
