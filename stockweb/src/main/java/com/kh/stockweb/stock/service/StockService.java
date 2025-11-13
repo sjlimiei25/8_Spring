@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.kh.stockweb.stock.model.mapper.StockMapper;
 import com.kh.stockweb.stock.model.vo.Stock;
 
 @Service    // => 비즈니스 로직 처리 담당
@@ -17,11 +18,21 @@ public class StockService {
 	@Value("${django.url}")
 	private String djangoUrl;
 	
+	// ** 생성자 주입 방식으로 StockMapper 주입(lombok 안쓰는 가정하에 작성) **
+	// 1) 주입할 객체 타입으로 필드 선언 (객체 생성 x)
+	private final StockMapper mapper;
+	// 2) 생성자를 통해 주입 -> 매개변수로 해당 타입이 존재해야 함
+	public StockService(StockMapper mapper) {
+		this.mapper = mapper;
+	}
 	
 	// HTTP 요청용 객체 : RestTemplate (WebClinet)
 	private final RestTemplate restTemplate = new RestTemplate();
 
 	public Stock searchStock(String name) {
+		// DB에 저장된 데이터가 있는 지 조회
+		
+		
 		
 		// 장고(django) 서비스로 요청
 		// -------------------------------------------------------------
