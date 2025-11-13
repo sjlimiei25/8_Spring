@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title> STOCK WEB </title>
@@ -14,15 +14,18 @@
 		<button>검색</button>
 	</form>
 
+	<a href="remove">검색 기록 지우기</a>
 	<hr>
 
 	<!-- 검색 결과가 없을 경우 표시할 화면 -->
-	<div>
+	<div th:if="${session.stock == null}">
 		<p>검색 결과가 없습니다.</p>
 	</div>
 
 	<!-- 검색 결과가 있을 경우 표시할 화면 -->
-	<div>
+	<!-- ${변수} : request 영역에 저장된 값 -->
+	<!-- ${session.변수} : session 영역에 저장된 값 -->
+	<div th:if="${session.stock != null}">
 		<table>
 			<!-- <tr>
 				<th>종목명</th>
@@ -38,19 +41,19 @@
 			</tr> -->
 			<tr>
 				<th>종목명</th>
-				<td>XXXXX</td>
+				<td>[[${session.stock.name}]]</td>
 			</tr>
 			<tr>
 				<th>코드</th>
-				<td>XXXXXX</td>
+				<td>[[${session.stock.code}]]</td>
 			</tr>
 			<tr>
 				<th>현재가</th>
-				<td>XXXXXXX</td>
+				<td>[[${session.stock.price}]]</td>
 			</tr>
 			<tr>
 				<th>시가총액</th>
-				<td>XXXXXX</td>
+				<td>[[${session.stock.marketCap}]]</td>
 			</tr>
 		</table>
 	</div>

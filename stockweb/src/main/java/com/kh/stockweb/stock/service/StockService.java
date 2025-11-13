@@ -14,7 +14,7 @@ import com.kh.stockweb.stock.model.vo.Stock;
 @Service    // => 비즈니스 로직 처리 담당
 public class StockService {
 	
-	@Value("{django.url}")
+	@Value("${django.url}")
 	private String djangoUrl;
 	
 	

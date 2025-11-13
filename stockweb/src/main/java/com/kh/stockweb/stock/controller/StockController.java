@@ -1,12 +1,15 @@
 package com.kh.stockweb.stock.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.stockweb.stock.model.vo.Stock;
 import com.kh.stockweb.stock.service.StockService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 
 @Controller		// => 요청을 받아 처리 후 응답하는 클래스에 지정 (빈 등록)
@@ -23,7 +26,9 @@ public class StockController {
 	// [POST] /search 주소로 요청이 들어왔을 때 요청을 받을 메소드 정의
 	@PostMapping("/search")	   // Post 방식의 /search 주소의 요청이 왔을 때 처리할 메소드 지정
 	// [접근제한자] [예약어] 반환형 메소드명(매개변수) {}
-	public String searchStock(@RequestParam(value="name") String name) {
+	public String searchStock(@RequestParam(value="name") String name,
+							Model model
+							, HttpSession session) {
 		// @RequestParam 정의한 변수 => 요청 시 전달되는 데이터 (키값: name)
 
 		Stock stock = service.searchStock(name);
@@ -32,7 +37,24 @@ public class StockController {
 		 * -> 이 데이터를 저장할 모델 정의
 		 */
 		
-		return null;
+		// HTML (UI)에서 사용할 데이터 담기
+		// model.addAttribute("stock", stock);		// request  영역에 데이터 저장
+		
+		// 세션 영역에 데이터 저장 -> redirect 처리 시 데이터 공유가 필요할 때
+		session.setAttribute("stock", stock);
+		
+		
+		// return "index";		// index.html 파일로 렌더링
+		return "redirect:/"; // 루트 경로(메인 페이지)로 이동 (redirect:요청주소)
+	}
+	
+	
+	@GetMapping("/remove")
+	public String removeSearch(HttpSession session) {
+		// 검색 기록 지우기 --> 세션영역에 저장된 검색 정보 삭제
+		session.removeAttribute("stock");
+		
+		return "redirect:/";
 	}
 }
 
