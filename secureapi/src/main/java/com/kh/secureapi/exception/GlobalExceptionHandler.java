@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -53,6 +54,30 @@ public class GlobalExceptionHandler {
 		// 응답코드가 200OK가 아닌 상황에 따라 전달 (400, 500 등)
 		return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	/**
+	 * 존재하지 않는 경로에 대한 예외 처리 (404)
+	 * 
+	 * @param e NoHandlerFoundException
+	 * @return 보안 처리된 JSON 응답 및 404 상태 코드
+	 * 
+	 * * 스프링에서는 기본적으로 404 발생 시 에러 페이지(HTML)를 찾으려 시도함.
+	 * * 리액트와 같이 클라이언트와 연동하기 위한 API 서버인 경우,
+	 * 	 일관된 JSON 응답을 위해 설정 추가 (=> application.properties)
+	 * * 에러 메시지에 요청 경로(Path) 등을 포함하면 서버 구조 노출 위험이 있으므로 정제된 메시지를 전달. 
+	 */
+	@ExceptionHandler(NoHandlerFoundException.class)
+	public ResponseEntity<Map<String, Object>> handle404(NoHandlerFoundException e) {
+		
+		// 클라이언트에게 메시지 전달
+		Map<String, Object> response = new HashMap<>();
+		response.put("status", false);
+		response.put("message", "잘못된 경로의 요청입니다.");
+		// => 보안을 위해 경로를 노출하지 않음!
+		
+		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);		
+	}
+	
 	
 }
 
