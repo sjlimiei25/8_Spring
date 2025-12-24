@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -78,7 +79,25 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);		
 	}
 	
-	
+	/**
+	 * 입력값 검증 실패 시 처리
+	 * -> 요청 데이터
+	 * 
+	 * @param e MethodArgumentNotValidException
+	 * @return 검증 실패 메시지 및 400 상태 코드
+	 */
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Map<String, Object>> handleValidationException(MethodArgumentNotValidException e) {
+		
+		Map<String, Object> response = new HashMap<>();
+		response.put("status", false);
+		
+		// 에러 메시지를 validation에 지정한 메시지로 전달 (첫번째 항목만 전달)
+		String msg = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+		response.put("message", msg);
+
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	}
 }
 
 
