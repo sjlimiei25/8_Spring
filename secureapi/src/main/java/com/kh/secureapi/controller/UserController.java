@@ -10,6 +10,7 @@ import com.kh.secureapi.dto.UserJoinRequest;
 import jakarta.validation.Valid;
 
 @RestController
+// @CrossOrigin("http://localhost:3000")
 public class UserController {
 
 	// [POST] /join
