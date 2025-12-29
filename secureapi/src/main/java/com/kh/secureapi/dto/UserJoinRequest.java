@@ -54,5 +54,12 @@ public class UserJoinRequest {
 	// 1살 이상만 허용
 	@Min(value=1, message="나이는 1살 이상이어야 합니다.")
 	private int age;
+
+	@Override
+	public String toString() {
+		return userId + ", " + email + ", " + age;
+	}
+	
+	
 	
 }
