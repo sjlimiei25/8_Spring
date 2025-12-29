@@ -3,6 +3,7 @@ package com.kh.secureapi.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,6 +48,14 @@ public class UserJoinRequest {
 	@Size(min=4, max=12, message="아이디는 4~12자 사이여야 합니다.")
 	private String userId;
 	
+	// 비밀번호.
+	// - KISA(한국인터넷진흥원) 패스워드 가이드라인 : 10자리 이상, 두 종류 이상의 문자 구성
+	// - 필수항목, 10자 이상/영문대소문자/숫자/특수문자(!@#$%^*()_-=+) 포함
+	@NotBlank(message="비밀번호는 필수 항목입니다.")
+	@Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^*()_\\-+=])[A-Za-z\\d!@#$%^*()_\\-+=]{10,}$"
+	, message="비밀번호는 10자 이상, 영문, 숫자, 특수문자를 포함해야 합니다.")
+	private String userPwd;
+	
 	// 이메일 형식
 	@Email(message="이메일 형식이 올바르지 않습니다.")
 	private String email;
@@ -60,6 +69,10 @@ public class UserJoinRequest {
 		return userId + ", " + email + ", " + age;
 	}
 	
+	// * 암호화된 비밀번호를 전달받아 userPwd 필드에 저장 메소드 (setter 역할)
+	public void changeEncryptedPassword(String encPasswd) {
+		this.userPwd = encPasswd;
+	}
 	
 	
 }

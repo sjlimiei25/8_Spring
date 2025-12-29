@@ -27,7 +27,8 @@ public class UserController {
 	public ResponseEntity<?> join(@Valid @RequestBody UserJoinRequest request) {
 		
 		// --- 비즈니스 로직 생략 --- => db 작업
-		
+		// * db 작업 --> 전달된 값들을 DB에 추가 (Create)
+		userService.registerUser(request);
 		
 		return ResponseEntity.ok("회원가입 성공");
 		
