@@ -62,6 +62,8 @@ public class UserService {
 		String userId = request.getUserId();		// 사용자가 입력한 아이디 추출
 		UserVO user = userMapper.findByUserId(userId);	// Mapper를 통해 DB에서 조회한 후 결과를 변수에 저장
 		
+		System.out.println(user);
+		
 		// * 사용자가 존재 여부 확인: 아이디에 해당하는 정보가 없으면 false 반환
 		if(user == null) {
 			
