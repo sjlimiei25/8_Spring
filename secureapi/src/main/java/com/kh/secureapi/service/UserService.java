@@ -3,6 +3,7 @@ package com.kh.secureapi.service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.kh.secureapi.dto.LoginRequest;
 import com.kh.secureapi.dto.UserJoinRequest;
 import com.kh.secureapi.mapper.UserMapper;
 import com.kh.secureapi.vo.UserVO;
@@ -51,6 +52,34 @@ public class UserService {
 		user.setAge(request.getAge());
 		
 		userMapper.insert(user);
+	}
+	
+	// true/false => boolean 
+	public boolean loginUser(LoginRequest request) {
+		// LoginRequest --> 아이디(userId), 비밀번호(userPwd)
+		
+		// * 사용자가 입력한 아이디로 DB에서 조회
+		String userId = request.getUserId();		// 사용자가 입력한 아이디 추출
+		UserVO user = userMapper.findByUserId(userId);	// Mapper를 통해 DB에서 조회한 후 결과를 변수에 저장
+		
+		// * 사용자가 존재 여부 확인: 아이디에 해당하는 정보가 없으면 false 반환
+		if(user == null) {
+			
+			return false;
+		}
+		
+		// * 비밀번호 일치 여부 확인: 입력된 원본(평문) 비밀번호와 DB에 저장된 암호문를 매칭
+		//		matches(원본비밀번호, 암호화된비밀번호) : 일치하면 true, 일치하지 않으면 false
+		//   사용자가 입력한 비밀번호, DB에서 조회한 비밀번호
+		//   => 원본비밀번호(평문) : 사용자가 입력한 비밀번호
+		//   => 암호화된비밀번호   : DB에서 조회한 비밀번호
+		boolean result = passwordEncoder.matches(request.getUserPwd(), user.getUserPwd());
+		if (result) {
+			return true;
+		} else {
+			// 예외 발생....
+			return false;
+		}
 	}
 }
 

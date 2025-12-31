@@ -1,5 +1,6 @@
 package com.kh.secureapi.vo;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import lombok.Setter;
 //		-> 컬럼명, 데이터타입을 기준으로 클래스를 정의
 @NoArgsConstructor
 @Setter
+@Getter
 public class UserVO {
 	// 필드 4개 추가
 	// USER_ID 컬럼 VARCHAR2(50) 타입
