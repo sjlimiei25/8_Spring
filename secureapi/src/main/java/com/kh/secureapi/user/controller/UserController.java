@@ -1,4 +1,4 @@
-package com.kh.secureapi.controller;
+package com.kh.secureapi.user.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kh.secureapi.dto.LoginRequest;
-import com.kh.secureapi.dto.UserJoinRequest;
-import com.kh.secureapi.service.UserService;
+import com.kh.secureapi.user.dto.LoginRequest;
+import com.kh.secureapi.user.dto.UserJoinRequest;
+import com.kh.secureapi.user.service.UserService;
 
 import jakarta.validation.Valid;
 

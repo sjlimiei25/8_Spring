@@ -1,12 +1,12 @@
-package com.kh.secureapi.service;
+package com.kh.secureapi.user.service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.kh.secureapi.dto.LoginRequest;
-import com.kh.secureapi.dto.UserJoinRequest;
-import com.kh.secureapi.mapper.UserMapper;
-import com.kh.secureapi.vo.UserVO;
+import com.kh.secureapi.user.dto.LoginRequest;
+import com.kh.secureapi.user.dto.UserJoinRequest;
+import com.kh.secureapi.user.mapper.UserMapper;
+import com.kh.secureapi.user.vo.UserVO;
 
 import lombok.RequiredArgsConstructor;
 

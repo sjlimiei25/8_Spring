@@ -50,6 +50,14 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc11
 	implementation 'com.oracle.database.jdbc:ojdbc11'
+	
+	/* jwt 처리를 위해 추가 - jjwt api/impl/jackson 0.12.6 */
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl
+	implementation 'io.jsonwebtoken:jjwt-impl:0.12.6'	
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.12.6'
 }
 
 tasks.named('test') {
