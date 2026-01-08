@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.secureapi.user.dto.LoginRequest;
+import com.kh.secureapi.user.dto.LoginResponse;
 import com.kh.secureapi.user.dto.UserJoinRequest;
 import com.kh.secureapi.user.service.UserService;
 
@@ -42,6 +43,7 @@ public class UserController {
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
 		// 전달된 데이터(아이디, 비밀번호)를 기준으로 유효한 사용자인지 확인 => 서비스
+		/*
 		boolean result = userService.loginUser(request);
 		
 		if (result) {
@@ -51,6 +53,15 @@ public class UserController {
 			// 그렇지 않은 경우 "아이디 또는 비밀번호가 존재하지 않습니다."/401 응답
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)			// 응답 상태코드
 								 .body("아이디 또는 비밀번호가 존재하지 않습니다.");	// 응답 데이터
+		}
+		*/
+		LoginResponse result = userService.loginUser(request);
+		
+		if (result != null) {
+			return ResponseEntity.ok(result);
+		} else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+								.body("로그인 실패");
 		}
 	}
 	
