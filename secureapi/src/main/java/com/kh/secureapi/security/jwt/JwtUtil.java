@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.kh.secureapi.user.vo.UserVO;
 
@@ -14,6 +15,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
+@Component
 public class JwtUtil {
 
 	@Value("${jwt.secret}")
@@ -104,8 +106,10 @@ public class JwtUtil {
 		
 		// 추출된 유효시간과 현재시간 비교 -> before
 		boolean isValidTime = expr.before(new Date());
+		// 만료시간(expr)이 현재시간(new Date())보다 이전이면 true
+		//  그렇지않으면 false ( 같거나 이후 )
 		
-		return isValidSub && isValidTime;
+		return isValidSub && !isValidTime;
 	}
 }
 
