@@ -3,7 +3,9 @@ package com.kh.secureapi.user.service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.kh.secureapi.security.jwt.JwtUtil;
 import com.kh.secureapi.user.dto.LoginRequest;
+import com.kh.secureapi.user.dto.LoginResponse;
 import com.kh.secureapi.user.dto.UserJoinRequest;
 import com.kh.secureapi.user.mapper.UserMapper;
 import com.kh.secureapi.user.vo.UserVO;
@@ -18,6 +20,10 @@ public class UserService {
 	private final BCryptPasswordEncoder passwordEncoder;
 	// UserMapper 주입
 	private final UserMapper userMapper;
+	
+	// JwtUtil 주입 (생성자 주입방식)
+	private final JwtUtil jwtUtil;
+	
 	
 	public void registerUser(UserJoinRequest request) {
 		
@@ -55,6 +61,7 @@ public class UserService {
 	}
 	
 	// true/false => boolean 
+	/*
 	public boolean loginUser(LoginRequest request) {
 		// LoginRequest --> 아이디(userId), 비밀번호(userPwd)
 		
@@ -82,6 +89,26 @@ public class UserService {
 			// 예외 발생....
 			return false;
 		}
+	}
+	*/
+	
+	public LoginResponse loginUser(LoginRequest request) {
+		
+		UserVO user = userMapper.findByUserId(request.getUserId());
+		if(user == null) {			
+			return null;			
+		}
+		
+		if (passwordEncoder.matches(request.getUserPwd(), user.getUserPwd())) {
+			// 유효한 사용자 (인증된 사용자 정보)
+			// => 토큰 생성
+			String token = jwtUtil.generateAccessToken(user);
+			return new LoginResponse(user.getUserId(), token);			
+		} else {
+			// 비밀번호 일치하지 않음 -> 유효하지 않은 사용자
+			return null;
+		}
+		
 	}
 }
 
