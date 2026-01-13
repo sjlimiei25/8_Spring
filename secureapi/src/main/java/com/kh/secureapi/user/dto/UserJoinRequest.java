@@ -1,4 +1,4 @@
-package com.kh.secureapi.dto;
+package com.kh.secureapi.user.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;

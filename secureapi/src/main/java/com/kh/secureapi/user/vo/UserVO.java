@@ -1,4 +1,4 @@
-package com.kh.secureapi.vo;
+package com.kh.secureapi.user.vo;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,10 +1,10 @@
-package com.kh.secureapi.mapper;
+package com.kh.secureapi.user.mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import com.kh.secureapi.vo.UserVO;
+import com.kh.secureapi.user.vo.UserVO;
 
 @Mapper
 public interface UserMapper {

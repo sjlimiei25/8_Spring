@@ -1,4 +1,4 @@
-package com.kh.secureapi.dto;
+package com.kh.secureapi.user.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
