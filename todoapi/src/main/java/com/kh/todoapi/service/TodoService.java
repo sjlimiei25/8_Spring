@@ -1,11 +1,14 @@
 package com.kh.todoapi.service;
 
-import com.kh.todoapi.mapper.TodoMapper;
-import com.kh.todoapi.vo.Todo;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.kh.todoapi.dto.request.CreateTodo;
+import com.kh.todoapi.mapper.TodoMapper;
+import com.kh.todoapi.vo.Todo;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +24,7 @@ public class TodoService {
         return todoMapper.findById(id);
     }
 
-    public boolean addTodo(Todo todo) {
+    public boolean addTodo(CreateTodo todo) {
         return todoMapper.save(todo) > 0;
     }
 

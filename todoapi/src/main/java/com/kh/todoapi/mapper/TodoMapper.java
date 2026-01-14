@@ -1,14 +1,17 @@
 package com.kh.todoapi.mapper;
 
-import com.kh.todoapi.vo.Todo;
-import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.kh.todoapi.dto.request.CreateTodo;
+import com.kh.todoapi.vo.Todo;
 
 @Mapper
 public interface TodoMapper {
     List<Todo> findAll();
 
-    int save(Todo todo);
+    int save(CreateTodo todo);
 
     int updateStatus(Todo todo);
 
