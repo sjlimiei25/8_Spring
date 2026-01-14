@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.kh.todoapi.todo.dto.request.CreateTodo;
+import com.kh.todoapi.todo.dto.request.UpdateTodo;
 import com.kh.todoapi.todo.mapper.TodoMapper;
 import com.kh.todoapi.todo.vo.Todo;
 
@@ -28,10 +29,7 @@ public class TodoService {
         return todoMapper.save(todo) > 0;
     }
 
-    public boolean updateTodo(Long id, String status) {
-        Todo todo = new Todo();
-        todo.setId(id);
-        todo.setStatus(status);
+    public boolean updateTodo(UpdateTodo todo) {
         return todoMapper.updateStatus(todo) > 0;
     }
 

@@ -1,7 +1,6 @@
 package com.kh.todoapi.todo.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.todoapi.todo.dto.request.CreateTodo;
+import com.kh.todoapi.todo.dto.request.UpdateTodo;
 import com.kh.todoapi.todo.service.TodoService;
 import com.kh.todoapi.todo.vo.Todo;
 
@@ -45,26 +45,25 @@ public class TodoController {
         if (isCreated) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateTodo(@PathVariable(name="id") Long id, @RequestBody Map<String, String> body) {
-        String status = body.get("status");
-        if (status == null || (!status.equals("IN_PROGRESS") && !status.equals("COMPLETED"))) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> updateTodo(@PathVariable(name="id") Long id
+    								, @Valid @RequestBody UpdateTodo todo) {
 
         if (todoService.getTodo(id) == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        
+        todo.setId(id);
 
-        boolean isUpdated = todoService.updateTodo(id, status);
+        boolean isUpdated = todoService.updateTodo(todo);
         if (isUpdated) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

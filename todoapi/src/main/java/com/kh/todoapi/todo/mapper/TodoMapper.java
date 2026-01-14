@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.kh.todoapi.todo.dto.request.CreateTodo;
+import com.kh.todoapi.todo.dto.request.UpdateTodo;
 import com.kh.todoapi.todo.vo.Todo;
 
 @Mapper
@@ -13,7 +14,7 @@ public interface TodoMapper {
 
     int save(CreateTodo todo);
 
-    int updateStatus(Todo todo);
+    int updateStatus(UpdateTodo todo);
 
     int delete(Long id);
 
