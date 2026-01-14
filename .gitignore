@@ -32,3 +32,5 @@ gradle-app.setting
 
 ### eclipse ###
 .metadata
+.settings
+bin
