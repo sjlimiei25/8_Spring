@@ -18,7 +18,7 @@ public class UpdateTodo {
 	private Long id;
 	
 	@NotBlank(message="status 는 필수 항목입니다.")
-	@Pattern(message="잘못된 상태값입니다."
+	@Pattern(message="상태값은 IN_PROGRESS 또는 COMPLETED 만 허용합니다."
 			, regexp="^(IN_PROGRESS|COMPLETED)$")
 	private String status;
 
