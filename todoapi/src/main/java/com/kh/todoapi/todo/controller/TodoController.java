@@ -1,4 +1,4 @@
-package com.kh.todoapi.controller;
+package com.kh.todoapi.todo.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kh.todoapi.dto.request.CreateTodo;
-import com.kh.todoapi.service.TodoService;
-import com.kh.todoapi.vo.Todo;
+import com.kh.todoapi.todo.dto.request.CreateTodo;
+import com.kh.todoapi.todo.service.TodoService;
+import com.kh.todoapi.todo.vo.Todo;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

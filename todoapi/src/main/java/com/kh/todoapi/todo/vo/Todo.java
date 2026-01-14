@@ -1,4 +1,4 @@
-package com.kh.todoapi.vo;
+package com.kh.todoapi.todo.vo;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

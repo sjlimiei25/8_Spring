@@ -1,12 +1,12 @@
-package com.kh.todoapi.service;
+package com.kh.todoapi.todo.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.kh.todoapi.dto.request.CreateTodo;
-import com.kh.todoapi.mapper.TodoMapper;
-import com.kh.todoapi.vo.Todo;
+import com.kh.todoapi.todo.dto.request.CreateTodo;
+import com.kh.todoapi.todo.mapper.TodoMapper;
+import com.kh.todoapi.todo.vo.Todo;
 
 import lombok.RequiredArgsConstructor;
 

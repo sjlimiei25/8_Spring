@@ -1,11 +1,11 @@
-package com.kh.todoapi.mapper;
+package com.kh.todoapi.todo.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.kh.todoapi.dto.request.CreateTodo;
-import com.kh.todoapi.vo.Todo;
+import com.kh.todoapi.todo.dto.request.CreateTodo;
+import com.kh.todoapi.todo.vo.Todo;
 
 @Mapper
 public interface TodoMapper {
