@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KH EMS - 효율적인 인사 관리를 위한 직원 관리 시스템 대시보드">
+    <title>Dashboard | KH EMS</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">KH EMS</div>
+        </div>
+        <nav class="nav-menu">
+            <a href="/" class="nav-item active">
+                <i class="fas fa-chart-line"></i>
+                <span>대시보드</span>
+            </a>
+            <a href="/employee/list" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>직원 관리</span>
+            </a>
+            <a href="/department/list" class="nav-item">
+                <i class="fas fa-building"></i>
+                <span>부서 관리</span>
+            </a>
+            <a href="/job/list" class="nav-item">
+                <i class="fas fa-id-card"></i>
+                <span>직급 관리</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="header">
+            <!-- Header elements like profile or notifications could go here -->
+        </header>
+
+        <h1 class="page-title">대시보드</h1>
+
+        <div class="stats-grid">
+            <!-- 직원 수 Card -->
+            <div class="stat-card">
+                <div class="stat-icon icon-blue">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <span class="stat-label">전체 직원 수</span>
+                <div class="stat-value" th:text="${empCount ?: '0'}">0</div>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>현재 시스템 등록 인원</span>
+                </div>
+            </div>
+
+            <!-- 부서 수 Card -->
+            <div class="stat-card">
+                <div class="stat-icon icon-emerald">
+                    <i class="fas fa-sitemap"></i>
+                </div>
+                <span class="stat-label">총 부서 수</span>
+                <div class="stat-value" th:text="${deptCount ?: '0'}">0</div>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-check-circle"></i>
+                    <span>운영 중인 부서</span>
+                </div>
+            </div>
+
+            <!-- 직급 수 Card -->
+            <div class="stat-card">
+                <div class="stat-icon icon-amber">
+                    <i class="fas fa-award"></i>
+                </div>
+                <span class="stat-label">총 직급 수</span>
+                <div class="stat-value" th:text="${jobCount ?: '0'}">0</div>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-info-circle"></i>
+                    <span>정의된 직급 단계</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Optional: Welcome or recent activities can be added here -->
+    </main>
+
+    <script>
+        // Simple interactivity for navigation items
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function () {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>
