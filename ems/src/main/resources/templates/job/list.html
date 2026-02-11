@@ -35,10 +35,54 @@
 
     <main class="main-content">
         <h1 class="page-title">직급 관리</h1>
+
         <div class="stat-card">
-            <p>직급 목록 페이지 준비 중입니다.</p>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>직급 코드</th>
+                        <th>직급명</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(list)}">
+                        <td colspan="2" style="text-align: center;">등록된 직급이 없습니다.</td>
+                    </tr>
+                    <tr th:each="job : ${list}">
+                        <td th:text="${job.jobCode}"></td>
+                        <td th:text="${job.jobName}"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </main>
+
+    <style>
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            color: var(--text-primary);
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .data-table th {
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+        }
+
+        .data-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+    </style>
 </body>
 
 </html>
