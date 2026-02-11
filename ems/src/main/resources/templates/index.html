@@ -46,10 +46,6 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <header class="header">
-            <!-- Header elements like profile or notifications could go here -->
-        </header>
-
         <h1 class="page-title">대시보드</h1>
 
         <div class="stats-grid">
@@ -93,6 +89,40 @@
             </div>
         </div>
 
+        <!-- Chat Section -->
+        <section class="chat-section">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <i class="fas fa-comments"></i>
+                    <span>사내 익명 게시판 / 채팅</span>
+                </div>
+                <div class="chat-status">
+                    <span class="status-dot"></span>
+                    <span style="font-size: 0.875rem; color: var(--text-secondary);">온라인: 12명</span>
+                </div>
+            </div>
+            <div id="chat-messages" class="chat-messages">
+                <div class="message received">
+                    <span class="message-info">김철수 사원 • 오전 10:24</span>
+                    오늘 점심 메뉴 뭔가요?
+                </div>
+                <div class="message received">
+                    <span class="message-info">이영희 대리 • 오전 10:25</span>
+                    식단표 보니까 오늘은 돈까스네요!
+                </div>
+                <div class="message sent">
+                    <span class="message-info">나 • 오전 10:26</span>
+                    오, 좋네요! 같이 가실 분?
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" class="chat-input" placeholder="메시지를 입력하세요...">
+                <button id="send-btn" class="send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </section>
+
         <!-- Optional: Welcome or recent activities can be added here -->
     </main>
 
@@ -105,6 +135,49 @@
             });
         });
 
+        // Chat Interactivity
+        const chatInput = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-btn');
+        const chatMessages = document.getElementById('chat-messages');
+
+        function sendMessage() {
+            const text = chatInput.value.trim();
+            if (text) {
+                const now = new Date();
+                const timeStr = now.getHours() >= 12 ? '오후' : '오전';
+                const hour = now.getHours() % 12 || 12;
+                const minute = String(now.getMinutes()).padStart(2, '0');
+                const timestamp = `${timeStr} ${hour}:${minute}`;
+
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message sent';
+                messageDiv.innerHTML = `
+                    <span class="message-info">나 • ${timestamp}</span>
+                    ${text}
+                `;
+                chatMessages.appendChild(messageDiv);
+                chatInput.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                // Simple auto-reply simulation
+                setTimeout(() => {
+                    const replyDiv = document.createElement('div');
+                    replyDiv.className = 'message received';
+                    replyDiv.innerHTML = `
+                        <span class="message-info">시스템 알림 • ${timestamp}</span>
+                        메시지가 정상적으로 전달되었습니다.
+                    `;
+                    chatMessages.appendChild(replyDiv);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
         // Async fetch for statistics
         document.addEventListener('DOMContentLoaded', () => {
             fetch('/api/stats/counts')
@@ -115,6 +188,9 @@
                     document.getElementById('job-count').innerText = data.jobCount.toLocaleString();
                 })
                 .catch(error => console.error('Error fetching stats:', error));
+
+            // Initial scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         });
     </script>
 </body>
