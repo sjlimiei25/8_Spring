@@ -1,4 +1,4 @@
-package com.kh.ems.job.model.dto;
+package com.kh.ems.job.model.vo;
 
 public class Job {
     private String jobCode;

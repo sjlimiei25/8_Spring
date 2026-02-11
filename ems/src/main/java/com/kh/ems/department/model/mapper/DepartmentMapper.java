@@ -1,13 +1,13 @@
 package com.kh.ems.department.model.mapper;
 
-import com.kh.ems.department.model.dto.Department;
+import com.kh.ems.department.model.dto.DepartmentDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
 public interface DepartmentMapper {
-    List<Department> selectAll();
+    List<DepartmentDTO> selectAll();
 
     int selectCount();
 }

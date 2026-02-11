@@ -1,6 +1,6 @@
 package com.kh.ems.employee.controller;
 
-import com.kh.ems.employee.model.dto.Employee;
+import com.kh.ems.employee.model.dto.EmployeeDTO;
 import com.kh.ems.employee.model.service.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +21,7 @@ public class EmployeeController {
 
     @GetMapping("/list")
     public String list(Model model) {
-        List<Employee> list = employeeService.selectAll();
+        List<EmployeeDTO> list = employeeService.selectAll();
         model.addAttribute("list", list);
         return "employee/list";
     }

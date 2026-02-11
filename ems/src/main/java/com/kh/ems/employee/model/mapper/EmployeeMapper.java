@@ -1,13 +1,13 @@
 package com.kh.ems.employee.model.mapper;
 
-import com.kh.ems.employee.model.dto.Employee;
+import com.kh.ems.employee.model.dto.EmployeeDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
 public interface EmployeeMapper {
-    List<Employee> selectAll();
+    List<EmployeeDTO> selectAll();
 
     int selectCount();
 }

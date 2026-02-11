@@ -1,4 +1,4 @@
-package com.kh.ems.department.model.dto;
+package com.kh.ems.department.model.vo;
 
 public class Department {
     private String deptId;

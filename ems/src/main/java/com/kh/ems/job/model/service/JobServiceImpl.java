@@ -1,6 +1,6 @@
 package com.kh.ems.job.model.service;
 
-import com.kh.ems.job.model.dto.Job;
+import com.kh.ems.job.model.vo.Job;
 import com.kh.ems.job.model.mapper.JobMapper;
 import org.springframework.stereotype.Service;
 

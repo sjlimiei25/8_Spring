@@ -44,8 +44,8 @@
                         <th>이름</th>
                         <th>이메일</th>
                         <th>전화번호</th>
-                        <th>부서코드</th>
-                        <th>직급코드</th>
+                        <th>부서</th>
+                        <th>직급</th>
                         <th>급여</th>
                         <th>입사일</th>
                     </tr>
@@ -59,8 +59,8 @@
                         <td th:text="${emp.empName}"></td>
                         <td th:text="${emp.email}"></td>
                         <td th:text="${emp.phone}"></td>
-                        <td th:text="${emp.deptCode}"></td>
-                        <td th:text="${emp.jobCode}"></td>
+                        <td th:text="${emp.deptTitle}"></td>
+                        <td th:text="${emp.jobName}"></td>
                         <td th:text="${#numbers.formatDecimal(emp.salary, 0, 'COMMA', 0, 'POINT')} + '원'"></td>
                         <td th:text="${emp.hireDate}"></td>
                     </tr>

@@ -1,6 +1,6 @@
 package com.kh.ems.department.controller;
 
-import com.kh.ems.department.model.dto.Department;
+import com.kh.ems.department.model.dto.DepartmentDTO;
 import com.kh.ems.department.model.service.DepartmentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +21,7 @@ public class DepartmentController {
 
     @GetMapping("/list")
     public String list(Model model) {
-        List<Department> list = departmentService.selectAll();
+        List<DepartmentDTO> list = departmentService.selectAll();
         model.addAttribute("list", list);
         return "department/list";
     }

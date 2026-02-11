@@ -1,6 +1,6 @@
 package com.kh.ems.job.controller;
 
-import com.kh.ems.job.model.dto.Job;
+import com.kh.ems.job.model.vo.Job;
 import com.kh.ems.job.model.service.JobService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -42,7 +42,7 @@
                     <tr>
                         <th>부서 코드</th>
                         <th>부서명</th>
-                        <th>지역 코드</th>
+                        <th>지역명</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,7 +52,7 @@
                     <tr th:each="dept : ${list}">
                         <td th:text="${dept.deptId}"></td>
                         <td th:text="${dept.deptTitle}"></td>
-                        <td th:text="${dept.locationId}"></td>
+                        <td th:text="${dept.locationName}"></td>
                     </tr>
                 </tbody>
             </table>

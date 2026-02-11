@@ -1,4 +1,4 @@
-package com.kh.ems.employee.model.dto;
+package com.kh.ems.employee.model.vo;
 
 import java.sql.Date;
 
