@@ -35,10 +35,66 @@
 
     <main class="main-content">
         <h1 class="page-title">직원 관리</h1>
+
         <div class="stat-card">
-            <p>직원 목록 페이지 준비 중입니다.</p>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>사번</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>전화번호</th>
+                        <th>부서코드</th>
+                        <th>직급코드</th>
+                        <th>급여</th>
+                        <th>입사일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(list)}">
+                        <td colspan="8" style="text-align: center;">등록된 직원이 없습니다.</td>
+                    </tr>
+                    <tr th:each="emp : ${list}">
+                        <td th:text="${emp.empId}"></td>
+                        <td th:text="${emp.empName}"></td>
+                        <td th:text="${emp.email}"></td>
+                        <td th:text="${emp.phone}"></td>
+                        <td th:text="${emp.deptCode}"></td>
+                        <td th:text="${emp.jobCode}"></td>
+                        <td th:text="${#numbers.formatDecimal(emp.salary, 0, 'COMMA', 0, 'POINT')} + '원'"></td>
+                        <td th:text="${emp.hireDate}"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </main>
+
+    <style>
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            color: var(--text-primary);
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .data-table th {
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+        }
+
+        .data-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+    </style>
 </body>
 
 </html>
