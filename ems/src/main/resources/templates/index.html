@@ -59,7 +59,7 @@
                     <i class="fas fa-user-tie"></i>
                 </div>
                 <span class="stat-label">전체 직원 수</span>
-                <div class="stat-value" th:text="${empCount ?: '0'}">0</div>
+                <div id="emp-count" class="stat-value">0</div>
                 <div class="stat-trend trend-up">
                     <i class="fas fa-arrow-up"></i>
                     <span>현재 시스템 등록 인원</span>
@@ -72,7 +72,7 @@
                     <i class="fas fa-sitemap"></i>
                 </div>
                 <span class="stat-label">총 부서 수</span>
-                <div class="stat-value" th:text="${deptCount ?: '0'}">0</div>
+                <div id="dept-count" class="stat-value">0</div>
                 <div class="stat-trend trend-up">
                     <i class="fas fa-check-circle"></i>
                     <span>운영 중인 부서</span>
@@ -85,7 +85,7 @@
                     <i class="fas fa-award"></i>
                 </div>
                 <span class="stat-label">총 직급 수</span>
-                <div class="stat-value" th:text="${jobCount ?: '0'}">0</div>
+                <div id="job-count" class="stat-value">0</div>
                 <div class="stat-trend trend-up">
                     <i class="fas fa-info-circle"></i>
                     <span>정의된 직급 단계</span>
@@ -103,6 +103,18 @@
                 document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
                 this.classList.add('active');
             });
+        });
+
+        // Async fetch for statistics
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/api/stats/counts')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('emp-count').innerText = data.empCount.toLocaleString();
+                    document.getElementById('dept-count').innerText = data.deptCount.toLocaleString();
+                    document.getElementById('job-count').innerText = data.jobCount.toLocaleString();
+                })
+                .catch(error => console.error('Error fetching stats:', error));
         });
     </script>
 </body>

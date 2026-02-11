@@ -19,4 +19,9 @@ public class JobServiceImpl implements JobService {
     public List<Job> selectAll() {
         return jobMapper.selectAll();
     }
+
+    @Override
+    public int getCount() {
+        return jobMapper.selectCount();
+    }
 }

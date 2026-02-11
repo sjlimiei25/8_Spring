@@ -19,4 +19,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> selectAll() {
         return employeeMapper.selectAll();
     }
+
+    @Override
+    public int getCount() {
+        return employeeMapper.selectCount();
+    }
 }

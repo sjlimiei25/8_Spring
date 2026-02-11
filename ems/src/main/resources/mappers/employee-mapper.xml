@@ -6,4 +6,7 @@
     <select id="selectAll" resultType="com.kh.ems.employee.model.dto.Employee">
         SELECT * FROM EMPLOYEE
     </select>
+    <select id="selectCount" resultType="_int">
+        SELECT COUNT(*) FROM EMPLOYEE
+    </select>
 </mapper>

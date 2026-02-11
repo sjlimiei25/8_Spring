@@ -9,4 +9,7 @@
             JOB_NAME as jobName
         FROM JOB
     </select>
+    <select id="selectCount" resultType="_int">
+        SELECT COUNT(*) FROM JOB
+    </select>
 </mapper>

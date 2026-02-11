@@ -19,4 +19,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     public List<Department> selectAll() {
         return departmentMapper.selectAll();
     }
+
+    @Override
+    public int getCount() {
+        return departmentMapper.selectCount();
+    }
 }

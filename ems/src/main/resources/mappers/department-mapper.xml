@@ -10,4 +10,7 @@
             LOCATION_ID as locationId
         FROM DEPARTMENT
     </select>
+    <select id="selectCount" resultType="_int">
+        SELECT COUNT(*) FROM DEPARTMENT
+    </select>
 </mapper>

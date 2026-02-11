@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface JobMapper {
     List<Job> selectAll();
+
+    int selectCount();
 }
