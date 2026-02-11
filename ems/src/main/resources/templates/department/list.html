@@ -35,10 +35,56 @@
 
     <main class="main-content">
         <h1 class="page-title">부서 관리</h1>
+
         <div class="stat-card">
-            <p>부서 목록 페이지 준비 중입니다.</p>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>부서 코드</th>
+                        <th>부서명</th>
+                        <th>지역 코드</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(list)}">
+                        <td colspan="3" style="text-align: center;">등록된 부서가 없습니다.</td>
+                    </tr>
+                    <tr th:each="dept : ${list}">
+                        <td th:text="${dept.deptId}"></td>
+                        <td th:text="${dept.deptTitle}"></td>
+                        <td th:text="${dept.locationId}"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </main>
+
+    <style>
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            color: var(--text-primary);
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .data-table th {
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+        }
+
+        .data-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+    </style>
 </body>
 
 </html>
