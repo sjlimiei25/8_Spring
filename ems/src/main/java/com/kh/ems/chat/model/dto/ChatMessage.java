@@ -1,4 +1,4 @@
-package com.kh.ems.chat.model.vo;
+package com.kh.ems.chat.model.dto;
 
 public class ChatMessage {
     private String role;

@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.ems.chat.model.dto.ChatMessage;
 import com.kh.ems.chat.model.service.ChatService;
-import com.kh.ems.chat.model.vo.ChatMessage;
 
 @Controller
 @RequestMapping("/chat")
@@ -33,6 +33,7 @@ public class ChatController {
     @PostMapping("/send")
     @ResponseBody
     public ChatMessage sendMessage(@RequestBody ChatMessage message) {
-        return chatService.getResponse(message.getContent());
+        String answer = chatService.generateText(message.getContent());
+        return new ChatMessage("assistant", answer);
     }
 }

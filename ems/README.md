@@ -3,10 +3,14 @@
 ## 사전 준비
 실습용 계정 C##KH 생성 및 실습 스크립트 실행 필요 ⚠
 
+## 의존성 확인 및 다운로드
+> gradlew dependencies
+> gradlew build
+
 ## 실행
 * 2개의 터미널로 아래 명령어를 각각 실행해두면, devTools로 인해 실시간으로 변경사항을 확인할 수 있습니다.
-> gradlew.bat bootRun
-> gradlew.bat classes --t
+> gradlew bootRun
+> gradlew classes --t
 
 ## 종료
 > Ctrl + C
