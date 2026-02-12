@@ -1,54 +1,36 @@
 package com.kh.ems.chat.model.service;
 
-import org.springframework.ai.chat.messages.AssistantMessage;
-import org.springframework.ai.chat.messages.SystemMessage;
-import org.springframework.ai.chat.messages.UserMessage;
-import org.springframework.ai.chat.model.ChatModel;
-import org.springframework.ai.chat.model.ChatResponse;
-import org.springframework.ai.chat.prompt.ChatOptions;
-import org.springframework.ai.chat.prompt.Prompt;
+import com.kh.ems.chat.tools.ChatTools;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ChatServiceImpl implements ChatService {
 
-    private final ChatModel chatModel;
+    private final ChatClient chatClient;
+    private final ChatTools chatTools;
 
-    public ChatServiceImpl(ChatModel chatModel) {
-        this.chatModel = chatModel;
+    public ChatServiceImpl(ChatClient.Builder chatClientBuilder, ChatTools chatTools) {
+        this.chatClient = chatClientBuilder.build();
+        this.chatTools = chatTools;
     }
 
     @Override
     public String generateText(String question) {
-        // 시스템 메시지 생성
-        SystemMessage systemMessage = SystemMessage.builder()
-                .text("사용자 질문에 대해 한국어로 답변해줘.")
-                .build();
+        return this.chatClient.prompt()
+                .system("""
+                        당신은 사내 직원 관리 시스템(EMS)의 도우미입니다.
+                        제공된 도구를 사용하여 직원, 부서, 직급에 관한 질문에 답변하세요.
 
-        // 사용자 메시지 생성
-        UserMessage userMessage = UserMessage.builder()
-                .text(question)
-                .build();
+                        만약 질문이 직원, 부서, 직급과 관련이 없거나 도구로 해결할 수 없는 내용이라면,
+                        반드시 "해당 내용은 도움을 드리기 어렵습니다. 문의하기를 이용해주세요."라고만 답변하세요.
+                        다른 부연 설명이나 추측은 하지 마세요.
 
-        // 대화 옵션 설정
-        ChatOptions chatOptions = ChatOptions.builder()
-                .model("gpt-4o-mini")
-                .temperature(0.3)
-                .maxTokens(1000)
-                .build();
-
-        // 프롬프트 생성
-        Prompt prompt = Prompt.builder()
-                .messages(systemMessage, userMessage)
-                .chatOptions(chatOptions)
-                .build();
-
-        // LLM에게 요청하고 응답받기
-        ChatResponse response = chatModel.call(prompt);
-        AssistantMessage assistantMessage = response.getResult().getOutput();
-
-        String answer = assistantMessage.getText();
-
-        return answer;
+                        모든 답변은 한국어로 정중하게 하세요.
+                        """)
+                .user(question)
+                .tools(chatTools)
+                .call()
+                .content();
     }
 }
