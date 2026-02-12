@@ -19,38 +19,13 @@
 </head>
 
 <body>
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <div class="logo">KH EMS</div>
-        </div>
-        <nav class="nav-menu">
-            <a href="/" class="nav-item active">
-                <i class="fas fa-chart-line"></i>
-                <span>대시보드</span>
-            </a>
-            <a href="/employee/list" class="nav-item">
-                <i class="fas fa-users"></i>
-                <span>직원 관리</span>
-            </a>
-            <a href="/department/list" class="nav-item">
-                <i class="fas fa-building"></i>
-                <span>부서 관리</span>
-            </a>
-            <a href="/job/list" class="nav-item">
-                <i class="fas fa-id-card"></i>
-                <span>직급 관리</span>
-            </a>
-            <a href="/chat" class="nav-item">
-                <i class="fas fa-robot"></i>
-                <span>AI 챗봇</span>
-            </a>
-        </nav>
-    </aside>
+    <!-- Sidebar Fragment -->
+    <aside th:replace="~{fragments/sidebar :: sidebar('dashboard')}"></aside>
 
     <!-- Main Content -->
     <main class="main-content">
         <h1 class="page-title">대시보드</h1>
+        <!-- ... (이하 생략) ... -->
 
         <div class="stats-grid">
             <!-- 직원 수 Card -->
@@ -132,6 +107,26 @@
             .help-banner:hover .send-btn {
                 background: #2563eb;
                 transform: scale(1.05);
+            }
+
+            .sidebar-footer {
+                padding: 1.5rem;
+                border-top: 1px solid var(--glass-border);
+                margin-top: auto;
+            }
+
+            .contact-info {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                color: var(--text-secondary);
+                font-size: 0.8125rem;
+                line-height: 1.4;
+            }
+
+            .contact-info i {
+                color: var(--accent);
+                font-size: 1rem;
             }
         </style>
 
