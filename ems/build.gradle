@@ -18,6 +18,11 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+  set('springAiVersion', "1.1.2")
+}
+
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -27,6 +32,15 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.5'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// Spring AI
+  	implementation 'org.springframework.ai:spring-ai-starter-model-openai'
+}
+
+dependencyManagement {
+  imports {
+    mavenBom "org.springframework.ai:spring-ai-bom:${springAiVersion}"
+  }
 }
 
 tasks.named('test') {

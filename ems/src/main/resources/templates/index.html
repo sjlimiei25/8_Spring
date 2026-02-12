@@ -41,6 +41,10 @@
                 <i class="fas fa-id-card"></i>
                 <span>직급 관리</span>
             </a>
+            <a href="/chat" class="nav-item">
+                <i class="fas fa-robot"></i>
+                <span>AI 챗봇</span>
+            </a>
         </nav>
     </aside>
 
@@ -128,7 +132,7 @@
         const sendBtn = document.getElementById('send-btn');
         const chatMessages = document.getElementById('chat-messages');
 
-        function sendMessage() {
+        async function sendMessage() {
             const text = chatInput.value.trim();
             if (text) {
                 const now = new Date();
@@ -137,6 +141,7 @@
                 const minute = String(now.getMinutes()).padStart(2, '0');
                 const timestamp = `${timeStr} ${hour}:${minute}`;
 
+                // 사용자 메시지 추가
                 const messageDiv = document.createElement('div');
                 messageDiv.className = 'message sent';
                 messageDiv.innerHTML = `
@@ -147,17 +152,45 @@
                 chatInput.value = '';
                 chatMessages.scrollTop = chatMessages.scrollHeight;
 
-                // Simple auto-reply simulation
-                setTimeout(() => {
-                    const replyDiv = document.createElement('div');
-                    replyDiv.className = 'message received';
-                    replyDiv.innerHTML = `
+                try {
+                    // 서버에 메시지 전송
+                    const response = await fetch('/chat/send', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            role: 'user',
+                            content: text
+                        })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+
+                        // 서버 응답 추가
+                        const replyDiv = document.createElement('div');
+                        replyDiv.className = 'message received';
+                        replyDiv.innerHTML = `
+                            <span class="message-info">🤖 K-Bot • ${timestamp}</span>
+                            ${data.content}
+                        `;
+                        chatMessages.appendChild(replyDiv);
+                    } else {
+                        throw new Error('서버 응답 오류');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'message received';
+                    errorDiv.innerHTML = `
                         <span class="message-info">시스템 알림 • ${timestamp}</span>
-                        메시지가 정상적으로 전달되었습니다.
+                        서버와의 통신 중 오류가 발생했습니다.
                     `;
-                    chatMessages.appendChild(replyDiv);
+                    chatMessages.appendChild(errorDiv);
+                } finally {
                     chatMessages.scrollTop = chatMessages.scrollHeight;
-                }, 1000);
+                }
             }
         }
 

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KH EMS - AI 챗봇 고객지원">
+    <title>AI Chat Support | KH EMS</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <style>
+        .chat-container {
+            max-width: 800px;
+            margin: 20px auto;
+            height: calc(100vh - 150px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: var(--card-bg);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">KH EMS</div>
+        </div>
+        <nav class="nav-menu">
+            <a href="/" class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>대시보드</span>
+            </a>
+            <a href="/employee/list" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>직원 관리</span>
+            </a>
+            <a href="/department/list" class="nav-item">
+                <i class="fas fa-building"></i>
+                <span>부서 관리</span>
+            </a>
+            <a href="/job/list" class="nav-item">
+                <i class="fas fa-id-card"></i>
+                <span>직급 관리</span>
+            </a>
+            <a href="/chat" class="nav-item active">
+                <i class="fas fa-robot"></i>
+                <span>AI 챗봇</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 class="page-title">AI Chat Support</h1>
+
+        <div class="chat-container">
+            <section class="chat-section">
+                <div class="chat-header">
+                    <div class="chat-title">
+                        <i class="fas fa-comments"></i>
+                        <span>🤖 K-Bot | EMS 도우미</span>
+                    </div>
+                </div>
+                <div id="chat-messages" class="chat-messages">
+                    <div class="message received">
+                        <span class="message-info">🤖 K-Bot</span>
+                        안녕하세요! KH EMS 시스템 이용에 대해 궁금한 점이 있으신가요?
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" class="chat-input" placeholder="궁금한 내용을 입력하세요...">
+                    <button id="send-btn" class="send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script th:inline="javascript">
+        const chatInput = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-btn');
+        const chatMessages = document.getElementById('chat-messages');
+
+        async function sendMessage() {
+            const text = chatInput.value.trim();
+            if (text) {
+                const now = new Date();
+                const timeStr = now.getHours() >= 12 ? '오후' : '오전';
+                const hour = now.getHours() % 12 || 12;
+                const minute = String(now.getMinutes()).padStart(2, '0');
+                const timestamp = `${timeStr} ${hour}:${minute}`;
+
+                // 사용자 메시지 추가
+                appendMessage('sent', '나', timestamp, text);
+                chatInput.value = '';
+
+                try {
+                    // 서버에 메시지 전송
+                    const response = await fetch('/chat/send', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            role: 'user',
+                            content: text
+                        })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        appendMessage('received', '🤖 K-Bot', timestamp, data.content);
+                    } else {
+                        throw new Error('서버 응답 오류');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    appendMessage('received', '시스템 알림', timestamp, '서버와의 통신 중 오류가 발생했습니다.');
+                }
+            }
+        }
+
+        function appendMessage(type, sender, time, text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.innerHTML = `
+                <span class="message-info">${sender} • ${time}</span>
+                ${text}
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // 초기 스크롤
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    </script>
+</body>
+
+</html>
