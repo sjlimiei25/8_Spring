@@ -1,6 +1,8 @@
 package com.kh.ems.chat.model.service;
 
-import com.kh.ems.chat.tools.ChatTools;
+import com.kh.ems.chat.tools.DepartmentTools;
+import com.kh.ems.chat.tools.EmployeeTools;
+import com.kh.ems.chat.tools.JobTools;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
@@ -8,11 +10,19 @@ import org.springframework.stereotype.Service;
 public class ChatServiceImpl implements ChatService {
 
     private final ChatClient chatClient;
-    private final ChatTools chatTools;
+    private final EmployeeTools employeeTools;
+    private final DepartmentTools departmentTools;
+    private final JobTools jobTools;
 
-    public ChatServiceImpl(ChatClient.Builder chatClientBuilder, ChatTools chatTools) {
+    public ChatServiceImpl(ChatClient.Builder chatClientBuilder,
+            EmployeeTools employeeTools,
+            DepartmentTools departmentTools,
+            JobTools jobTools) {
         this.chatClient = chatClientBuilder.build();
-        this.chatTools = chatTools;
+        
+        this.employeeTools = employeeTools;
+        this.departmentTools = departmentTools;
+        this.jobTools = jobTools;
     }
 
     @Override
@@ -29,7 +39,7 @@ public class ChatServiceImpl implements ChatService {
                         모든 답변은 한국어로 정중하게 하세요.
                         """)
                 .user(question)
-                .tools(chatTools)
+                .tools(employeeTools, departmentTools, jobTools)
                 .call()
                 .content();
     }
