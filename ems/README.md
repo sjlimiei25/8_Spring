@@ -1,7 +1,8 @@
 # ems
 
 ## 사전 준비
-실습용 계정 C##KH 생성 및 실습 스크립트 실행 필요 ⚠
+- 실습용 계정 C##KH 생성 및 실습 스크립트 실행 필요 ⚠
+- OpenAI API Key 발급 필요
 
 ## 의존성 확인 및 다운로드
 > gradlew dependencies\
