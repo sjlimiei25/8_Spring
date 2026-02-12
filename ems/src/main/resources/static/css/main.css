@@ -224,7 +224,7 @@ body {
     border-radius: 1.25rem;
     display: flex;
     flex-direction: column;
-    height: 500px;
+    height: 430px;
     margin-top: 2rem;
     overflow: hidden;
     animation: fadeIn 0.5s ease-out forwards;
